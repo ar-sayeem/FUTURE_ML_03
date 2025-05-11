@@ -1,0 +1,249 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi", "Hey", "Hello", "Good morning", "Good afternoon", "Good evening", 
+        "How are you", "What's up", "Hey there", "Hi there", "Greetings", 
+        "Is anyone there?", "Hello there", "Hi, how are you doing?", "Nice to meet you"
+      ],
+      "responses": [
+        "Hello! How can I help you today?", 
+        "Hi there! How may I assist you with our products or services?", 
+        "Welcome to our customer support! What brings you here today?",
+        "Hello! I'm here to help with any questions about our products, services, or policies."
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye", "See you later", "Goodbye", "I'm leaving", "Have a good day", 
+        "Bye bye", "Take care", "I need to go", "Talk to you later", 
+        "I'm off", "Until next time", "Catch you later", "Have a nice day"
+      ],
+      "responses": [
+        "Goodbye! Have a great day!", 
+        "Thanks for chatting, goodbye!", 
+        "We hope to assist you again soon. Goodbye!",
+        "Thank you for contacting us. Have a wonderful day!",
+        "Feel free to reach out again if you have any more questions. Goodbye!"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks", "Thank you", "That's helpful", "Thank you so much", 
+        "Thanks for the help", "I appreciate it", "Awesome, thanks", 
+        "That's great, thanks", "You've been helpful", "Much appreciated"
+      ],
+      "responses": [
+        "You're welcome! Is there anything else I can help you with?", 
+        "Happy to help! Let me know if you need assistance with anything else.", 
+        "Anytime! Feel free to ask if you have other questions.", 
+        "My pleasure! Is there something else you'd like to know?", 
+        "Glad I could assist you! Don't hesitate to reach out with other questions."
+      ]
+    },
+    {
+      "tag": "hours",
+      "patterns": [
+        "What are your hours", "When are you open", "What time do you close", 
+        "Business hours", "Opening time", "Closing time", "When can I visit", 
+        "Are you open on weekends", "Holiday hours", "What time do you open tomorrow",
+        "Are you open right now", "What days are you open", "hours", "open", "store hours"
+      ],
+      "responses": [
+        "Our store hours are 9am to 8pm Monday through Friday, 10am to 6pm on Saturdays, and 12pm to 5pm on Sundays.",
+        "We're open Monday-Friday 9am-8pm, Saturday 10am-6pm, and Sunday 12pm-5pm. Our customer service phone line is available 24/7.",
+        "Our physical locations are open Monday-Friday from 9am to 8pm, with weekend hours varying by location. Our online support is available 24/7."
+      ]
+    },
+    {
+      "tag": "products",
+      "patterns": [
+        "What do you sell", "What products do you offer", "What services do you have", 
+        "What can I buy", "Show me your products", "List your services", 
+        "What's available", "Tell me about your products", "What do you have in stock",
+        "What's new", "What are your bestsellers", "Do you have any specials", "products",
+        "what products", "products do you sell", "do you sell", "what do you offer"
+      ],
+      "responses": [
+        "We offer a wide range of products including smartphones, laptops, tablets, smart home devices, audio equipment, and accessories. Our most popular categories are gaming laptops and wireless earbuds.",
+        "Our product lineup includes electronics (smartphones, computers, accessories), home appliances (kitchen, cleaning, entertainment), and smart home devices. We also offer extended warranties and installation services.",
+        "We specialize in consumer electronics, including the latest smartphones, laptops, tablets, wearables, and smart home devices. We also offer repair services and custom computer builds."
+      ]
+    },
+    {
+      "tag": "returns",
+      "patterns": [
+        "Can I return my purchase", "What's your return policy", "Return policy",
+        "How do I get a refund", "Exchange policy", "Return period", 
+        "Do you accept returns", "I want to return something", "How long do I have to return",
+        "My item is defective", "Can I exchange for a different model",
+        "Do I need a receipt to return", "Return shipping cost", "returns", "refund",
+        "exchange", "return policy", "return my order", "return an item"
+      ],
+      "responses": [
+        "We accept returns within 30 days of purchase with a valid receipt. Items must be in their original condition and packaging. For online purchases, we'll provide a free return shipping label.",
+        "Our return policy allows returns within 30 days of purchase. You'll need the original receipt or order number. Unopened items receive full refunds, while opened items may receive store credit depending on condition.",
+        "Electronics can be returned within 30 days, with a 15-day period for smartphones and laptops. All returns require proof of purchase and original packaging. Refunds are processed within 5-7 business days."
+      ]
+    },
+    {
+      "tag": "shipping",
+      "patterns": [
+        "How much is shipping", "When will my order arrive", "Shipping options", 
+        "Delivery time", "How do you ship", "Is shipping free", 
+        "Do you ship internationally", "Express shipping", "Overnight delivery",
+        "Tracking my order", "Shipping costs", "How long will delivery take",
+        "shipping", "delivery", "ship", "shipping cost", "shipping options"
+      ],
+      "responses": [
+        "Standard shipping (5-7 business days) is $5.99, Express shipping (2-3 business days) is $12.99, and Next-Day delivery is $24.99. Orders over $50 qualify for free standard shipping!",
+        "We offer free standard shipping on orders over $50 (5-7 business days). Express shipping (2-3 days) costs $12.99, and Next-Day delivery is available for $24.99. International shipping varies by destination.",
+        "Our shipping options include Standard (5-7 business days, $5.99), Express (2-3 days, $12.99), and Next-Day ($24.99). Free standard shipping is available for orders over $50. You'll receive tracking information via email once your order ships."
+      ]
+    },
+    {
+      "tag": "payment",
+      "patterns": [
+        "What payment methods do you accept", "Can I pay with PayPal", 
+        "Do you take credit cards", "Can I pay on delivery", "Payment options",
+        "Do you accept Apple Pay", "Can I use Google Pay", "Do you offer financing",
+        "Can I pay in installments", "Do you have a payment plan", "payment methods",
+        "payment", "pay", "methods of payment", "how to pay"
+      ],
+      "responses": [
+        "We accept all major credit cards (Visa, MasterCard, American Express, Discover), PayPal, Apple Pay, and Google Pay. For purchases over $200, we also offer financing through Affirm.",
+        "Our payment options include credit/debit cards, PayPal, Apple Pay, Google Pay, and gift cards. For orders over $200, we offer 0% financing for 6 months through Affirm with qualified credit.",
+        "You can pay using credit/debit cards, PayPal, Apple Pay, Google Pay, or store gift cards. We also offer a 'Buy Now, Pay Later' option through Klarna for eligible purchases."
+      ]
+    },
+    {
+      "tag": "contact",
+      "patterns": [
+        "How do I contact you", "What's your phone number", "Where's your email", 
+        "Contact information", "Customer service number", "Support email", 
+        "How can I reach you", "Is there a live chat", "Do you have customer service",
+        "Technical support contact", "Who do I talk to about my order", "contact",
+        "contact you", "contact information", "phone number", "email", "support"
+      ],
+      "responses": [
+        "You can reach our customer service team at support@techshop.com or call us at 1-800-123-4567. Our support hours are 24/7 for email and 8am-10pm EST for phone support.",
+        "For immediate assistance, use our live chat on the website (24/7) or call 1-800-123-4567 (8am-10pm EST). You can also email us at support@techshop.com, and we'll respond within 1 business day.",
+        "Contact options include phone (1-800-123-4567, 8am-10pm EST), email (support@techshop.com), live chat on our website, or through our mobile app's support feature."
+      ]
+    },
+    {
+      "tag": "order_status",
+      "patterns": [
+        "Where is my order", "Track my package", "Check order status", 
+        "Is my order shipped", "When will I receive my order",
+        "Has my order been processed", "Order number lookup", 
+        "My order is late", "Did my order go through", "Delivery status",
+        "order status", "track order", "find my order", "check my order", "where is my order",
+        "order tracking", "find order"
+      ],
+      "responses": [
+        "I'd be happy to help you check your order status. You can track your package on our website under 'Order History' by entering your order number. Alternatively, you should have received a tracking email once your order shipped.",
+        "To check your order status, please use the order tracking feature on our website or app. You'll need your order number (found in your confirmation email) or the email address used for purchase.",
+        "Orders typically process within 24 hours, and you'll receive tracking information via email. If you haven't received this email, please check your spam folder or contact our customer service team with your order number."
+      ]
+    },
+    {
+      "tag": "help_with_order",
+      "patterns": [
+        "I need help with my order", "Help with order", "Order help", "Problem with my order",
+        "Order issue", "Help me with my order", "Order assistance", "My order is wrong",
+        "Missing item in order", "Order not received", "help with my order", "order problems",
+        "order issues", "wrong order"
+      ],
+      "responses": [
+        "I'm sorry to hear you're having trouble with your order. I can help you resolve this issue. Could you please provide your order number so I can look into it for you?",
+        "I'd be happy to help with your order. To assist you better, could you let me know what specific issue you're experiencing? Is it related to shipping, damaged items, or something else?",
+        "Let's get your order issue sorted right away. The fastest way to resolve order problems is to contact our dedicated order support team at orders@techshop.com or call 1-800-123-4567 with your order number ready."
+      ]
+    },
+    {
+      "tag": "product_info",
+      "patterns": [
+        "Tell me about", "Product details", "Product specifications", "What are the features",
+        "How does it work", "Technical specifications", "Product description", "More information",
+        "Can you tell me more", "Product info", "Features", "Specs", "Details about"
+      ],
+      "responses": [
+        "I'd be happy to provide more information about our products. Could you please specify which product you're interested in learning more about?",
+        "Our products come with detailed specifications and features that you can find on our website. For specific product information, please let me know which item you're interested in.",
+        "Each of our products has unique features and specifications. To give you accurate information, could you tell me which specific product you'd like to learn about?"
+      ]
+    },
+    {
+      "tag": "technical_support",
+      "patterns": [
+        "My device isn't working", "Technical help", "Troubleshooting", 
+        "Device problems", "How do I fix", "Setup assistance", 
+        "Software issue", "Hardware problem", "Need tech support", 
+        "Device won't turn on", "App not working", "How do I connect my device",
+        "technical support", "tech help", "troubleshoot", "fix my device"
+      ],
+      "responses": [
+        "I'm sorry to hear you're having technical difficulties. For immediate assistance, visit our Support Center at support.techshop.com where you can find troubleshooting guides, or contact our technical team at 1-800-456-7890.",
+        "For technical issues, I recommend first checking our online troubleshooting guide at support.techshop.com. If that doesn't resolve your issue, our tech support team is available 24/7 at 1-800-456-7890 or via live chat on our website.",
+        "Most technical issues can be resolved by power cycling your device (turning it off and on again) or checking for software updates. For persistent problems, contact our technical support team who can provide step-by-step assistance."
+      ]
+    },
+    {
+      "tag": "price_match",
+      "patterns": [
+        "Do you price match", "Will you match competitor prices", 
+        "I found it cheaper elsewhere", "Price guarantee", 
+        "Can you beat this price", "Price matching policy", 
+        "Lower price somewhere else", "Match online prices", "price match",
+        "match a price", "better price", "competitor price"
+      ],
+      "responses": [
+        "Yes, we offer price matching! If you find a lower price on an identical, in-stock item from a qualified retailer, we'll match that price. Just show us the competitor's current advertisement or website before purchase.",
+        "Our Price Match Guarantee covers identical products from major retailers (both online and brick-and-mortar). We'll match the price plus give you an additional 5% off if you're a TechRewards member.",
+        "We're committed to competitive pricing and will match verified lower prices from major retailers within 14 days of purchase. This includes Amazon, Best Buy, and other authorized retailers but excludes marketplace sellers."
+      ]
+    },
+    {
+      "tag": "discount",
+      "patterns": [
+        "Do you have any discounts", "Promo codes", "Current deals", 
+        "Are there any sales", "Student discount", "Military discount", 
+        "Coupon code", "Special offers", "Clearance items", 
+        "Loyalty program", "Rewards program", "discounts", "deals", "offers",
+        "promotions", "sales", "coupons"
+      ],
+      "responses": [
+        "We regularly run promotions and special offers! Currently, we have our Summer Sale with up to 40% off select items. We also offer a 10% discount for students, military personnel, and first responders with valid ID.",
+        "Join our free TechRewards program to save 5% on every purchase and earn points toward future discounts. We also offer special promotions for email subscribers, student discounts (10%), and seasonal sales events.",
+        "Check our 'Deals' section for the latest promotions. We're currently offering 15% off your first purchase when you sign up for our newsletter, plus we have weekly flash sales every Friday with up to 50% off select items."
+      ]
+    },
+    {
+      "tag": "store_pickup",
+      "patterns": [
+        "In-store pickup", "Buy online pick up in store", "BOPIS", 
+        "Curbside pickup", "Click and collect", "Reserve for pickup", 
+        "How does store pickup work", "Pick up my order", "Is pickup available",
+        "store pickup", "pickup", "pickup in store", "collect in store", "pickup options"
+      ],
+      "responses": [
+        "In-store pickup is available at all our locations! Simply select 'Store Pickup' at checkout, and you'll receive an email when your order is ready (typically within 2 hours). Bring your ID and order number to the customer service desk.",
+        "Our store pickup process is simple: Shop online, select your store location, and checkout. You'll receive an email when your order is ready (usually within 2 hours). Upon arrival, check in via our app or proceed to the pickup counter.",
+        "We offer both in-store and curbside pickup options. For curbside, select this option at checkout, and when you arrive at the store, park in a designated spot and call the number provided in your confirmation email. An associate will bring your order to your vehicle."
+      ]
+    },
+    {
+      "tag": "default",
+      "patterns": [],
+      "responses": [
+        "I'm here to help with information about our products, services, orders, returns, and more. Could you please provide more details about what you're looking for?",
+        "I'd like to assist you better. Could you please provide more specific information about what you're looking for?",
+        "I'm not quite sure what you're asking about. We can help with product information, order status, returns, technical support, and more. What can I assist you with today?"
+      ]
+    }
+  ]
+}

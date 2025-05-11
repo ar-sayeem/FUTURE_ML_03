@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Support Chatbot</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .chat-container {
+            width: 400px;
+            height: 600px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Lighter, smaller shadow */
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background-color: white;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .chat-header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            position: relative;
+        }
+        .chat-header .status {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #2ecc71;
+            box-shadow: 0 0 10px #2ecc71;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.6); }
+            70% { box-shadow: 0 0 0 10px rgba(46, 204, 113, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 204, 113, 0); }
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+            scroll-behavior: smooth;
+            margin-bottom: 0; /* Ensure no margin at bottom */
+            padding-bottom: 10px; /* Add some padding at bottom */
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease;
+            position: relative;
+            line-height: 1.5;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .user-message {
+            background-color: #3498db;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .bot-message {
+            background-color: #cccccc;
+            color: #111111;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .timestamp {
+            font-size: 10px;
+            color: #313131;
+            margin-top: 5px;
+            display: block;
+        }
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            border-radius: 18px;
+            background-color: #e6e6e6;
+            color: #333;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #999;
+            border-radius: 50%;
+            margin-right: 3px;
+            animation: typing 1s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+            margin-right: 0;
+        }
+        @keyframes typing {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0); }
+        }
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #e6e6e6;
+            position: relative;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .chat-input input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        .chat-input button {
+            margin-left: 10px;
+            padding: 12px 20px;
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 14px;
+            outline: none;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .chat-input button:hover {
+            background-color: #1a252f;
+        }
+        .chat-input button svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+        .suggestions {
+            padding: 10px 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+            background-color: #2c3e50;
+            scrollbar-width: thin;
+            position: relative; /* Changed from sticky to relative */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            border-top: 1px solid #e6e6e6;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05); /* Lighter inner shadow */
+        }
+        /* Show scrollbar for better UX on desktop */
+        .suggestions::-webkit-scrollbar {
+            height: 4px;
+        }
+        .suggestions::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        .suggestions::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+        .suggestions::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+        .suggestion-chip {
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #ffffff;
+            color: #333;
+            border-radius: 18px;
+            margin-right: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            border: 1px solid #ffffff;
+            font-weight: 500;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .suggestion-chip:hover {
+            background-color: #d4d4d4;
+            border-color: #bbb;
+        }
+        .bot-action-buttons {
+            display: flex;
+            margin-top: 10px;
+            gap: 8px;
+        }
+        .bot-action-button {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        .bot-action-button:hover {
+            background-color: #e0e0e0;
+        }
+        .welcome-card {
+            background-color: white;
+            border-radius: 15px;
+            padding: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .welcome-card h3 {
+            margin-top: 0;
+            color: #2c3e50;
+        }
+        .welcome-card p {
+            margin-bottom: 10px;
+            color: #666;
+        }
+        .help-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .help-category {
+            padding: 8px 12px;
+            background-color: #edf2f7;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+        .help-category:hover {
+            background-color: #e2e8f0;
+        }
+        /* Navigation buttons */
+        .scroll-top-btn, .reset-chat-btn {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #2c3e50;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 10;
+            opacity: 0.8;
+        }
+        .scroll-top-btn {
+            bottom: 180px;
+            right: 20px;
+        }
+        .reset-chat-btn {
+            bottom: 230px;
+            right: 20px;
+        }
+        .scroll-top-btn:hover, .reset-chat-btn:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        /* Scroll indicator for suggestions */
+        .scroll-indicator {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 50px;
+            pointer-events: none;
+            z-index: 5;
+        }
+        /* Add animations for buttons */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .pop-animation {
+            animation: pop 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            Customer Support Chatbot
+            <div class="status"></div>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="welcome-card">
+                <h3>Hello! 👋</h3>
+                <p>I'm here to help with any questions about our products and services.</p>
+                <div class="help-categories">
+                    <div class="help-category" data-query="What products do you offer?">Products</div>
+                    <div class="help-category" data-query="What's your return policy?">Returns</div>
+                    <div class="help-category" data-query="How much is shipping?">Shipping</div>
+                    <div class="help-category" data-query="What are your hours?">Hours</div>
+                    <div class="help-category" data-query="How do I contact you?">Contact</div>
+                    <div class="help-category" data-query="Where is my order?">Order Status</div>
+                </div>
+            </div>
+            <div class="message bot-message">
+                Hi there! How can I help you today?
+                <span class="timestamp">{{ current_time }}</span>
+            </div>
+            <div class="typing-indicator" id="typing-indicator">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="suggestions" id="suggestions">
+            <div class="suggestion-chip" data-query="What products do you sell?">What products do you sell?</div>
+            <div class="suggestion-chip" data-query="I need help with my order">Help with my order</div>
+            <div class="suggestion-chip" data-query="Return policy">Return policy</div>
+            <div class="suggestion-chip" data-query="Shipping options">Shipping options</div>
+            <!-- Scroll indicator -->
+            <div class="scroll-indicator"></div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message here..." autocomplete="off">
+            <button id="send-button">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Navigation buttons -->
+        <div class="scroll-top-btn" id="scroll-top-btn" title="Scroll to top">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 15l-6-6-6 6"/>
+            </svg>
+        </div>
+        <div class="reset-chat-btn" id="reset-chat-btn" title="Reset chat">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                <path d="M3 3v5h5"/>
+            </svg>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            const typingIndicator = document.getElementById('typing-indicator');
+            const suggestions = document.getElementById('suggestions');
+            const scrollTopBtn = document.getElementById('scroll-top-btn');
+            const resetChatBtn = document.getElementById('reset-chat-btn');
+            
+            // Common questions based on intents data - DIRECTLY MATCH PATTERNS FROM INTENTS.JSON
+            const commonQuestions = [
+                "What products do you sell?",
+                "I need help with my order",
+                "What's your return policy?",
+                "How much is shipping?",
+                "What are your hours?",
+                "How do I contact you?",
+                "Where is my order?",
+                "What payment methods do you accept?"
+            ];
+            
+            // Categories that fit the intent data - USING EXACT PATTERNS FROM INTENTS.JSON
+            const categories = {
+                "products": ["What products do you offer?", "What do you sell?", "Show me your products"],
+                "returns": ["What's your return policy?", "Can I return my purchase?", "How do I get a refund?"],
+                "shipping": ["How much is shipping?", "When will my order arrive?", "Do you ship internationally?"],
+                "order": ["Where is my order?", "Track my package", "Check order status"],
+                "payment": ["What payment methods do you accept?", "Do you take credit cards?", "Do you offer financing?"],
+                "technical": ["My device isn't working", "Technical help", "Need tech support"]
+            };
+
+            // Function to get current timestamp
+            function getTimestamp() {
+                const now = new Date();
+                return now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+
+            // Function to simulate typing delay based on message length
+            function getTypingDelay(message) {
+                const charCount = message.length;
+                const baseDelay = 800; // Reduced minimum delay
+                const calculatedDelay = charCount * 20; // 20ms per character (faster)
+                
+                // Cap the delay between 0.8-2.5 seconds (faster response)
+                return Math.min(Math.max(baseDelay, calculatedDelay), 2500);
+            }
+
+            // Function to add a message to the chat
+            function addMessage(message, isUser = false) {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.classList.add(isUser ? 'user-message' : 'bot-message');
+                
+                messageElement.innerHTML = message + `<span class="timestamp">${getTimestamp()}</span>`;
+                
+                // Insert before typing indicator
+                chatMessages.insertBefore(messageElement, typingIndicator);
+                
+                // Add action buttons to bot messages if not user and only if appropriate
+                if (!isUser) {
+                    addContextualSuggestions(message);
+                }
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                return messageElement;
+            }
+
+            // Function to add contextual suggestions after bot response
+            function addContextualSuggestions(message) {
+                updateSuggestions(getContextualSuggestions(message));
+            }
+            
+            // Function to get contextual suggestions based on message content
+            function getContextualSuggestions(message) {
+                const lowercaseMsg = message.toLowerCase();
+                
+                // More specific context matching
+                if (lowercaseMsg.includes('order status') || lowercaseMsg.includes('track') || lowercaseMsg.includes('where is my order')) {
+                    return categories.order;
+                } else if (lowercaseMsg.includes('return policy') || lowercaseMsg.includes('refund') || lowercaseMsg.includes('exchange')) {
+                    return categories.returns;
+                } else if (lowercaseMsg.includes('product') || lowercaseMsg.includes('sell') || lowercaseMsg.includes('items') || lowercaseMsg.includes('offer')) {
+                    return categories.products;
+                } else if (lowercaseMsg.includes('technical') || lowercaseMsg.includes('device') || lowercaseMsg.includes('not working') || lowercaseMsg.includes('troubleshoot')) {
+                    return categories.technical;
+                } else if (lowercaseMsg.includes('payment') || lowercaseMsg.includes('pay') || lowercaseMsg.includes('credit card')) {
+                    return categories.payment;
+                } else if (lowercaseMsg.includes('shipping') || lowercaseMsg.includes('delivery') || lowercaseMsg.includes('arrive')) {
+                    return categories.shipping;
+                } else {
+                    // Return diversified suggestions if no context matches
+                    return [
+                        categories.products[0],
+                        categories.returns[0],
+                        categories.shipping[0],
+                        categories.order[0]
+                    ];
+                }
+            }
+            
+            // Function to update suggestion chips
+            function updateSuggestions(suggestionsArray) {
+                // Clear existing suggestions except the scroll indicator
+                const scrollIndicator = suggestions.querySelector('.scroll-indicator');
+                suggestions.innerHTML = '';
+                suggestions.appendChild(scrollIndicator);
+                
+                // Add new suggestion chips - ensure they're unique
+                const uniqueSuggestions = Array.isArray(suggestionsArray) ? 
+                    [...new Set(suggestionsArray)] : 
+                    suggestionsArray;
+                
+                uniqueSuggestions.forEach(suggestion => {
+                    let query = suggestion;
+                    let text = suggestion;
+                    
+                    if (typeof suggestion === 'object') {
+                        query = suggestion.query;
+                        text = suggestion.text;
+                    }
+                    
+                    const chip = document.createElement('div');
+                    chip.classList.add('suggestion-chip');
+                    chip.textContent = text;
+                    chip.dataset.query = query;
+                    suggestions.insertBefore(chip, scrollIndicator);
+                });
+                
+                // Attach event listeners to new chips
+                document.querySelectorAll('.suggestion-chip').forEach(chip => {
+                    chip.addEventListener('click', function() {
+                        const query = this.dataset.query;
+                        userInput.value = query;
+                        sendMessage(query);
+                    });
+                });
+                
+                // Check if suggestions overflow and show scroll indicator if needed
+                setTimeout(() => {
+                    if (suggestions.scrollWidth > suggestions.clientWidth) {
+                        scrollIndicator.style.display = 'block';
+                    } else {
+                        scrollIndicator.style.display = 'none';
+                    }
+                }, 100);
+            }
+
+            // Function to send message to backend
+            async function sendMessage(message) {
+                try {
+                    // Skip empty messages
+                    if (!message.trim()) return;
+                    
+                    // Add user message
+                    addMessage(message, true);
+                    
+                    // Clear input
+                    userInput.value = '';
+                    
+                    // Show typing indicator
+                    typingIndicator.style.display = 'block';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+
+                    // Get response from server
+                    const response = await fetch('/get', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            'msg': message
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const botResponse = await response.text();
+                    
+                    // Add artificial delay for typing effect
+                    const typingDelay = getTypingDelay(botResponse);
+                    
+                    setTimeout(() => {
+                        // Hide typing indicator
+                        typingIndicator.style.display = 'none';
+                        
+                        // Add bot response
+                        const messageElement = addMessage(botResponse);
+                        
+                        // Add action buttons ONLY when appropriate - more selective conditions
+                        const needsActionButtons = 
+                            (botResponse.toLowerCase().includes('would you like more details') || 
+                             botResponse.toLowerCase().includes('would you like to know more') ||
+                             botResponse.toLowerCase().includes('is there a specific') ||
+                             (botResponse.toLowerCase().includes('question') && botResponse.toLowerCase().includes('?')));
+                             
+                        if (needsActionButtons && !botResponse.toLowerCase().includes('default')) {
+                            addActionButtons(messageElement);
+                        }
+                    }, typingDelay);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    typingIndicator.style.display = 'none';
+                    addMessage('Sorry, I encountered an error. Please try again later.');
+                }
+            }
+            
+            // Function to add action buttons to a message - more specific to the context
+            function addActionButtons(messageElement) {
+                const messageText = messageElement.textContent.toLowerCase();
+                const actionButtons = document.createElement('div');
+                actionButtons.classList.add('bot-action-buttons');
+                
+                // Customize buttons based on message content
+                if (messageText.includes('return policy')) {
+                    const yesButton = createActionButton('Yes, more details please', 'Tell me more about returns');
+                    const noButton = createActionButton('No thanks', 'I have a different question');
+                    actionButtons.appendChild(yesButton);
+                    actionButtons.appendChild(noButton);
+                } 
+                else if (messageText.includes('shipping')) {
+                    const stdButton = createActionButton('Standard shipping', 'Tell me about standard shipping');
+                    const expButton = createActionButton('Express options', 'What express shipping options do you have?');
+                    actionButtons.appendChild(stdButton);
+                    actionButtons.appendChild(expButton);
+                }
+                else if (messageText.includes('order')) {
+                    const trackButton = createActionButton('Track my order', 'How do I track my order?');
+                    const statusButton = createActionButton('Order status', 'Check my order status');
+                    actionButtons.appendChild(trackButton);
+                    actionButtons.appendChild(statusButton);
+                }
+                else if (messageText.includes('product')) {
+                    const bestButton = createActionButton('Bestsellers', 'What are your bestsellers?');
+                    const newButton = createActionButton('New arrivals', 'Show me new products');
+                    actionButtons.appendChild(bestButton);
+                    actionButtons.appendChild(newButton);
+                }
+                else {
+                    // Default buttons for other contexts
+                    const yesButton = createActionButton('Yes, please', 'Yes, I need more information');
+                    const noButton = createActionButton('No, thanks', 'No, I have a different question');
+                    actionButtons.appendChild(yesButton);
+                    actionButtons.appendChild(noButton);
+                }
+                
+                messageElement.appendChild(actionButtons);
+            }
+            
+            // Helper function to create action buttons
+            function createActionButton(text, query) {
+                const button = document.createElement('button');
+                button.classList.add('bot-action-button');
+                button.textContent = text;
+                button.addEventListener('click', function() {
+                    sendMessage(query);
+                });
+                return button;
+            }
+
+            // Event listener for send button
+            sendButton.addEventListener('click', function() {
+                const message = userInput.value.trim();
+                if (message) {
+                    sendMessage(message);
+                }
+            });
+
+            // Event listener for enter key
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const message = userInput.value.trim();
+                    if (message) {
+                        sendMessage(message);
+                    }
+                }
+            });
+            
+            // Event listeners for help categories - improved to ensure exact matching
+            document.querySelectorAll('.help-category').forEach(category => {
+                category.addEventListener('click', function() {
+                    const query = this.dataset.query;
+                    userInput.value = query; // Show the query in the input field
+                    sendMessage(query);
+                });
+            });
+            
+            // Event listener for scroll-to-top button
+            scrollTopBtn.addEventListener('click', function() {
+                this.classList.add('pop-animation');
+                chatMessages.scrollTop = 0;
+                setTimeout(() => {
+                    this.classList.remove('pop-animation');
+                }, 300);
+            });
+            
+            // Event listener for reset chat button
+            resetChatBtn.addEventListener('click', function() {
+                this.classList.add('pop-animation');
+                
+                // Clear chat messages except welcome card and initial bot message
+                while (chatMessages.children.length > 3) { // Welcome card, initial message, typing indicator
+                    if (chatMessages.lastChild !== typingIndicator) {
+                        chatMessages.removeChild(chatMessages.lastChild);
+                    } else if (chatMessages.children[chatMessages.children.length - 2]) {
+                        chatMessages.removeChild(chatMessages.children[chatMessages.children.length - 2]);
+                    }
+                }
+                
+                // Reset to initial suggestions
+                updateSuggestions(commonQuestions);
+                
+                // Clear input field
+                userInput.value = '';
+                
+                // Reset animation
+                setTimeout(() => {
+                    this.classList.remove('pop-animation');
+                }, 300);
+            });
+            
+            // Make suggestions horizontally scrollable with mouse wheel
+            suggestions.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                this.scrollLeft += e.deltaY;
+            });
+            
+            // Initial suggestions - use common questions directly
+            const initialSuggestions = commonQuestions.slice(0, 4); // Just show first 4 questions
+            updateSuggestions(initialSuggestions);
+
+            // Focus input field
+            userInput.focus();
+        });
+    </script>
+</body>
+</html>
