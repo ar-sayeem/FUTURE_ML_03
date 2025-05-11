@@ -23,7 +23,7 @@ Explore our intuitive customer support chatbot interface:
 
 ### 📱 Demo Video
 Watch the chatbot in action:  
-![Demo Video](https://github.com/ar-sayeem/FUTURE_ML_03/blob/main/ui/cscb.mp4)
+https://github.com/user-attachments/assets/869611ff-36d0-4457-9cf2-81406c222f18
 
 ---
 
