@@ -15,9 +15,9 @@ Explore our intuitive customer support chatbot interface:
 
 <table>
   <tr>
-    <td><img src="ui/ui0.png" alt="UI Example 1" width="300"/></td>
-    <td><img src="ui/ui1.png" alt="UI Example 2" width="300"/></td>
-    <td><img src="ui/ui2.png" alt="UI Example 3" width="300"/></td>
+    <td><img src="https://github.com/ar-sayeem/FUTURE_ML_03/blob/main/ui/ui0.PNG" alt="UI Example 1" width="300"/></td>
+    <td><img src="https://github.com/ar-sayeem/FUTURE_ML_03/blob/main/ui/ui1.PNG" alt="UI Example 2" width="300"/></td>
+    <td><img src="https://github.com/ar-sayeem/FUTURE_ML_03/blob/main/ui/ui2.PNG" alt="UI Example 3" width="300"/></td>
   </tr>
 </table>
 
