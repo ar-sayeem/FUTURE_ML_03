@@ -25,7 +25,7 @@ Explore our intuitive customer support chatbot interface:
 Watch the chatbot in action:  
 
 
-https://github.com/user-attachments/assets/ce1f35f9-825e-4766-bdd5-4531902ae0c3
+https://github.com/user-attachments/assets/63ca7904-5f01-43de-abbe-340c04bdf4fa
 
 
 ---
