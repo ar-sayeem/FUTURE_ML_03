@@ -196,3 +196,4 @@ The frontend interface can be customized by editing the files in the `templates/
 - Grateful to the **Flask** open-source community for providing a robust and lightweight web development framework.
 - Special thanks to the creators of supporting libraries and tools that made this project possible, including **Pandas**, **Matplotlib**, and **Jupyter Notebook**.
 - This project was developed as part of the **Future ML** program, aimed at fostering hands-on machine learning experience.
+
